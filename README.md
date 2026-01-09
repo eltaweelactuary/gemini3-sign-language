@@ -16,8 +16,9 @@ This application bridges the communication gap for the deaf and hard-of-hearing 
 ### Key Features
 
 - 🔄 **AI Translation** - Convert Arabic text to detailed sign language gesture descriptions
+- 🎨 **Imagen Integration** - AI-generated visual sign language illustrations for better learning
 - 💬 **Smart Assistant** - AI chatbot specialized for the deaf community
-- 📚 **Sign Dictionary** - 30+ Egyptian sign language words with descriptions
+- 📚 **Sign Dictionary** - 30+ Egyptian sign language words with detailed visual and text guides
 - 🚨 **Emergency Features** - Quick access to emergency phrases and location sharing
 - 🌐 **Bilingual** - Arabic/English support
 
@@ -27,7 +28,7 @@ This application bridges the communication gap for the deaf and hard-of-hearing 
 
 ### Prerequisites
 - Python 3.8+
-- Google Cloud Service Account with Vertex AI access
+- Google Cloud Service Account with Vertex AI access (Gemini 3 & Imagen enabled)
 
 ### Installation
 
@@ -53,11 +54,13 @@ Then open: **http://localhost:5000**
 
 | Component | Technology |
 |-----------|------------|
-| **AI Model** | Google Gemini 3 via Vertex AI |
+| **Text AI Model** | Google Gemini 3 via Vertex AI |
+| **Image AI Model** | Google Imagen via Vertex AI |
 | **Backend** | Python Flask |
 | **Authentication** | Service Account (GOOGLE_APPLICATION_CREDENTIALS) |
 | **Frontend** | HTML5, CSS3, JavaScript |
 | **Design** | Glassmorphism, Premium UI |
+
 
 ---
 

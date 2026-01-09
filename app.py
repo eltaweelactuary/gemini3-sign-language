@@ -15,6 +15,7 @@ app = Flask(__name__)
 
 # Configure AI - Vertex AI with Service Account (Gemini 3)
 model = None
+image_model = None
 ai_method = "None"
 
 # Vertex AI with Service Account
@@ -35,6 +36,14 @@ if os.path.exists(service_account_path):
         # Use Gemini 3 model
         model = GenerativeModel("gemini-2.0-flash-001")  # Will update to gemini-3.0 when available
         
+        # Initialize Imagen model for image generation
+        try:
+            from vertexai.preview.vision_models import ImageGenerationModel
+            image_model = ImageGenerationModel.from_pretrained("imagegeneration@006")
+            print(f"[✓] Imagen Model initialized")
+        except Exception as img_err:
+            print(f"[!] Imagen not available: {img_err}")
+        
         ai_method = f"Vertex AI Gemini 3 (Project: {project_id})"
         print(f"[✓] AI Configured: {ai_method}")
     except Exception as e:
@@ -44,6 +53,7 @@ else:
 
 if not model:
     print("[!] Warning: No AI configured. Add service-account-key.json")
+
 
 
 # Load sign language dictionary
@@ -162,11 +172,103 @@ def get_emergency_phrases():
                 if w.get('category') == 'emergency']
     return jsonify({'phrases': emergency})
 
+@app.route('/api/generate-image', methods=['POST'])
+def generate_sign_image():
+    """Generate AI image for sign language using Imagen API"""
+    if not model:
+        return jsonify({'error': 'AI not configured'}), 500
+    
+    data = request.json
+    word = data.get('word', '')
+    description = data.get('description', '')
+    save_to_dict = data.get('save', False)
+    
+    if not word or not description:
+        return jsonify({'error': 'Missing word or description'}), 400
+    
+    try:
+        # Generate image prompt
+        prompt = f"""
+        Educational illustration for sign language word: {word}. 
+        Instructional gesture details: {description}.
+        
+        Style requirements:
+        - Frontal view of hands and torso
+        - Clean solid background
+        - High contrast, professional drawing style
+        - Arabic text "{word}" clearly visible at the top
+        """
+        
+        # Use simple filename based on word
+        safe_word = word.replace(' ', '_')
+        image_relative_path = f"static/signs/{safe_word}.png"
+        image_absolute_path = os.path.join(os.path.dirname(__file__), image_relative_path)
+        
+        # Create directory if doesn't exist
+        os.makedirs(os.path.dirname(image_absolute_path), exist_ok=True)
+        
+        response_data = {
+            'success': True,
+            'word': word,
+            'description': description
+        }
+        
+        # Real image generation if image_model is available
+        if image_model:
+            print(f"[AI] Generating image for: {word}")
+            images = image_model.generate_images(
+                prompt=prompt,
+                number_of_images=1,
+                language="ar",
+            )
+            images[0].save(location=image_absolute_path, include_generation_parameters=False)
+            response_data['image_url'] = f"/{image_relative_path}"
+            response_data['message'] = f'✅ تم توليد صورة الكلمة: {word}'
+        else:
+            response_data['note'] = 'Imagen API not initialized'
+            response_data['message'] = f'📝 طلب توليد صورة للكلمة: {word} (Imagen غير متاح)'
+        
+        # Update/Save to dictionary
+        dictionary = load_dictionary()
+        existing = next((w for w in dictionary.get('words', []) if w.get('word') == word), None)
+        
+        if existing and 'image_url' in response_data:
+            existing['media_url'] = response_data['image_url']
+            existing['media_type'] = 'image'
+            response_data['saved'] = True
+        elif save_to_dict:
+            new_word = {
+                'word': word,
+                'word_en': data.get('word_en', word),
+                'category': 'custom',
+                'sign_description': description,
+                'facial_expression': data.get('facial', 'تعبير محايد'),
+                'hand_shape': data.get('hand_shape', 'حسب الوصف'),
+                'movement': data.get('movement', 'حسب الوصف'),
+                'media_type': 'image' if 'image_url' in response_data else None,
+                'media_url': response_data.get('image_url')
+            }
+            dictionary['words'].append(new_word)
+            response_data['saved'] = True
+        
+        # Save dictionary if any changes made
+        if response_data.get('saved'):
+            dict_path = os.path.join(os.path.dirname(__file__), 'sign_language_data.json')
+            with open(dict_path, 'w', encoding='utf-8') as f:
+                json.dump(dictionary, f, ensure_ascii=False, indent=4)
+        
+        return jsonify(response_data)
+        
+    except Exception as e:
+        print(f"[!] Image Generation failed: {e}")
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/health')
 def health():
     return jsonify({
         'status': 'healthy',
         'ai_configured': model is not None,
+        'imagen_configured': image_model is not None,
         'ai_method': ai_method,
         'app': 'Gemini 3 Sign Language Assistant',
         'hackathon': 'Gemini 3 Hackathon 2026'
@@ -179,6 +281,8 @@ if __name__ == '__main__':
     print("   Built for Gemini 3 Hackathon 2026")
     print("="*60)
     print(f"[SERVER] Running on: http://localhost:{port}")
-    print(f"[AI] Status: {'✓ ' + ai_method if model else '✗ Disabled'}")
+    print(f"[AI] Gemini: {'✓ ' + ai_method if model else '✗ Disabled'}")
+    print(f"[AI] Imagen: {'✓ Enabled' if image_model else '✗ Disabled'}")
     print("="*60 + "\n")
     app.run(debug=True, host='0.0.0.0', port=port)
+
