@@ -1,0 +1,336 @@
+{
+    "words": [
+        {
+            "word": "مرحبا",
+            "word_en": "Hello",
+            "category": "greetings",
+            "sign_description": "رفع اليد اليمنى مفتوحة والتلويح بها من اليسار لليمين مع ابتسامة",
+            "facial_expression": "ابتسامة ودية",
+            "hand_shape": "كف مفتوح، أصابع مضمومة",
+            "movement": "تلويح جانبي"
+        },
+        {
+            "word": "شكرا",
+            "word_en": "Thank you",
+            "category": "greetings",
+            "sign_description": "وضع أطراف الأصابع على الذقن ثم تحريكها للأمام وللأسفل",
+            "facial_expression": "ابتسامة امتنان",
+            "hand_shape": "أصابع مضمومة",
+            "movement": "من الذقن للأمام"
+        },
+        {
+            "word": "من فضلك",
+            "word_en": "Please",
+            "category": "greetings",
+            "sign_description": "فرك راحة اليد على الصدر بحركة دائرية",
+            "facial_expression": "تعبير طلب مهذب",
+            "hand_shape": "كف مفتوح",
+            "movement": "دائري على الصدر"
+        },
+        {
+            "word": "نعم",
+            "word_en": "Yes",
+            "category": "basics",
+            "sign_description": "إيماءة بالرأس للأسفل مع قبضة يد مغلقة تتحرك للأسفل",
+            "facial_expression": "تعبير إيجابي",
+            "hand_shape": "قبضة مغلقة",
+            "movement": "للأسفل"
+        },
+        {
+            "word": "لا",
+            "word_en": "No",
+            "category": "basics",
+            "sign_description": "هز الرأس يميناً ويساراً مع تحريك السبابة يميناً ويساراً",
+            "facial_expression": "تعبير رفض",
+            "hand_shape": "سبابة ممدودة",
+            "movement": "جانبي"
+        },
+        {
+            "word": "مساعدة",
+            "word_en": "Help",
+            "category": "emergency",
+            "sign_description": "وضع قبضة اليد اليمنى على راحة اليد اليسرى ورفعهما معاً للأعلى",
+            "facial_expression": "تعبير استغاثة عاجل",
+            "hand_shape": "قبضة على كف مفتوح",
+            "movement": "رفع للأعلى"
+        },
+        {
+            "word": "إسعاف",
+            "word_en": "Ambulance",
+            "category": "emergency",
+            "sign_description": "رسم علامة + على الذراع ثم تحريك اليدين كأنك تقود",
+            "facial_expression": "تعبير عاجل",
+            "hand_shape": "إصبعان متقاطعان ثم قبضتان",
+            "movement": "رسم + ثم حركة قيادة"
+        },
+        {
+            "word": "شرطة",
+            "word_en": "Police",
+            "category": "emergency",
+            "sign_description": "وضع اليد على الكتف كأنك تشير لشارة الشرطة",
+            "facial_expression": "تعبير جدي",
+            "hand_shape": "أصابع مضمومة",
+            "movement": "لمس الكتف"
+        },
+        {
+            "word": "حريق",
+            "word_en": "Fire",
+            "category": "emergency",
+            "sign_description": "تحريك الأصابع المفتوحة للأعلى بشكل متموج كاللهب",
+            "facial_expression": "تعبير خوف أو تحذير",
+            "hand_shape": "أصابع مفتوحة متباعدة",
+            "movement": "متموج للأعلى"
+        },
+        {
+            "word": "مستشفى",
+            "word_en": "Hospital",
+            "category": "emergency",
+            "sign_description": "رسم علامة + على الذراع العلوي باستخدام السبابة",
+            "facial_expression": "تعبير محايد",
+            "hand_shape": "سبابة ممدودة",
+            "movement": "رسم +"
+        },
+        {
+            "word": "طبيب",
+            "word_en": "Doctor",
+            "category": "medical",
+            "sign_description": "وضع إصبعين على المعصم كقياس النبض",
+            "facial_expression": "تعبير اهتمام",
+            "hand_shape": "إصبعان (السبابة والوسطى)",
+            "movement": "ضغط على المعصم"
+        },
+        {
+            "word": "دواء",
+            "word_en": "Medicine",
+            "category": "medical",
+            "sign_description": "حركة كأنك تفتح زجاجة دواء وتصب منها",
+            "facial_expression": "تعبير محايد",
+            "hand_shape": "قبضة + كف مفتوح",
+            "movement": "صب"
+        },
+        {
+            "word": "ألم",
+            "word_en": "Pain",
+            "category": "medical",
+            "sign_description": "وضع اليد على مكان الألم والضغط مع تعبير وجه متألم",
+            "facial_expression": "تعبير ألم واضح",
+            "hand_shape": "كف مفتوح أو قبضة",
+            "movement": "ضغط على المكان"
+        },
+        {
+            "word": "أنا",
+            "word_en": "I/Me",
+            "category": "pronouns",
+            "sign_description": "الإشارة بالسبابة نحو الصدر",
+            "facial_expression": "تعبير محايد",
+            "hand_shape": "سبابة ممدودة",
+            "movement": "إشارة للصدر"
+        },
+        {
+            "word": "أنت",
+            "word_en": "You",
+            "category": "pronouns",
+            "sign_description": "الإشارة بالسبابة نحو الشخص المخاطب",
+            "facial_expression": "تعبير محايد",
+            "hand_shape": "سبابة ممدودة",
+            "movement": "إشارة للأمام"
+        },
+        {
+            "word": "أحبك",
+            "word_en": "I love you",
+            "category": "emotions",
+            "sign_description": "رفع اليد مع مد الإبهام والسبابة والخنصر (علامة ILY)",
+            "facial_expression": "ابتسامة دافئة",
+            "hand_shape": "إبهام + سبابة + خنصر ممدودة",
+            "movement": "ثابتة أو هز خفيف"
+        },
+        {
+            "word": "سعيد",
+            "word_en": "Happy",
+            "category": "emotions",
+            "sign_description": "تحريك اليدين المفتوحتين للأعلى من الصدر مع ابتسامة",
+            "facial_expression": "ابتسامة عريضة",
+            "hand_shape": "كفان مفتوحان",
+            "movement": "للأعلى من الصدر"
+        },
+        {
+            "word": "حزين",
+            "word_en": "Sad",
+            "category": "emotions",
+            "sign_description": "تحريك اليدين المفتوحتين للأسفل من الوجه",
+            "facial_expression": "تعبير حزن",
+            "hand_shape": "كفان مفتوحان",
+            "movement": "للأسفل من الوجه"
+        },
+        {
+            "word": "واحد",
+            "word_en": "One",
+            "category": "numbers",
+            "sign_description": "رفع السبابة فقط",
+            "facial_expression": "محايد",
+            "hand_shape": "سبابة ممدودة",
+            "movement": "ثابتة"
+        },
+        {
+            "word": "اثنان",
+            "word_en": "Two",
+            "category": "numbers",
+            "sign_description": "رفع السبابة والوسطى",
+            "facial_expression": "محايد",
+            "hand_shape": "سبابة + وسطى",
+            "movement": "ثابتة"
+        },
+        {
+            "word": "ثلاثة",
+            "word_en": "Three",
+            "category": "numbers",
+            "sign_description": "رفع السبابة والوسطى والبنصر",
+            "facial_expression": "محايد",
+            "hand_shape": "ثلاثة أصابع",
+            "movement": "ثابتة"
+        },
+        {
+            "word": "أكل",
+            "word_en": "Eat/Food",
+            "category": "daily",
+            "sign_description": "تحريك اليد نحو الفم كأنك تأكل",
+            "facial_expression": "محايد أو سعيد",
+            "hand_shape": "أصابع مضمومة",
+            "movement": "نحو الفم"
+        },
+        {
+            "word": "شرب",
+            "word_en": "Drink",
+            "category": "daily",
+            "sign_description": "إمالة اليد نحو الفم كأنك تشرب من كوب",
+            "facial_expression": "محايد",
+            "hand_shape": "قبضة (كأنك تمسك كوب)",
+            "movement": "إمالة نحو الفم"
+        },
+        {
+            "word": "نوم",
+            "word_en": "Sleep",
+            "category": "daily",
+            "sign_description": "وضع اليدين المضمومتين على الخد وإمالة الرأس",
+            "facial_expression": "عيون مغلقة",
+            "hand_shape": "كفان مضمومان",
+            "movement": "على الخد مع إمالة"
+        },
+        {
+            "word": "ماء",
+            "word_en": "Water",
+            "category": "daily",
+            "sign_description": "تشكيل حرف W بثلاثة أصابع ولمس الذقن",
+            "facial_expression": "محايد",
+            "hand_shape": "ثلاثة أصابع (W)",
+            "movement": "لمس الذقن"
+        },
+        {
+            "word": "بيت",
+            "word_en": "Home/House",
+            "category": "places",
+            "sign_description": "تشكيل مثلث بكلتا اليدين فوق الرأس كسقف",
+            "facial_expression": "محايد",
+            "hand_shape": "يدان متلاقيتان",
+            "movement": "تشكيل سقف"
+        },
+        {
+            "word": "مدرسة",
+            "word_en": "School",
+            "category": "places",
+            "sign_description": "تصفيق اليدين مرتين كأنك تنادي الطلاب",
+            "facial_expression": "محايد",
+            "hand_shape": "كفان مفتوحان",
+            "movement": "تصفيق"
+        },
+        {
+            "word": "عمل",
+            "word_en": "Work",
+            "category": "daily",
+            "sign_description": "ضرب قبضة اليد اليمنى على قبضة اليد اليسرى مرتين",
+            "facial_expression": "جدي",
+            "hand_shape": "قبضتان",
+            "movement": "ضرب متكرر"
+        },
+        {
+            "word": "صديق",
+            "word_en": "Friend",
+            "category": "people",
+            "sign_description": "تشابك السبابتين معاً مرتين",
+            "facial_expression": "ابتسامة",
+            "hand_shape": "سبابتان",
+            "movement": "تشابك"
+        },
+        {
+            "word": "عائلة",
+            "word_en": "Family",
+            "category": "people",
+            "sign_description": "تشكيل دائرة بكلتا اليدين أمام الجسم",
+            "facial_expression": "ابتسامة دافئة",
+            "hand_shape": "كفان يشكلان دائرة",
+            "movement": "دائرة أمامية"
+        }
+    ],
+    "categories": [
+        {
+            "id": "greetings",
+            "name": "التحيات",
+            "name_en": "Greetings",
+            "icon": "👋"
+        },
+        {
+            "id": "basics",
+            "name": "أساسيات",
+            "name_en": "Basics",
+            "icon": "📝"
+        },
+        {
+            "id": "emergency",
+            "name": "طوارئ",
+            "name_en": "Emergency",
+            "icon": "🚨"
+        },
+        {
+            "id": "medical",
+            "name": "طبي",
+            "name_en": "Medical",
+            "icon": "🏥"
+        },
+        {
+            "id": "pronouns",
+            "name": "ضمائر",
+            "name_en": "Pronouns",
+            "icon": "👤"
+        },
+        {
+            "id": "emotions",
+            "name": "مشاعر",
+            "name_en": "Emotions",
+            "icon": "❤️"
+        },
+        {
+            "id": "numbers",
+            "name": "أرقام",
+            "name_en": "Numbers",
+            "icon": "🔢"
+        },
+        {
+            "id": "daily",
+            "name": "يومي",
+            "name_en": "Daily",
+            "icon": "☀️"
+        },
+        {
+            "id": "places",
+            "name": "أماكن",
+            "name_en": "Places",
+            "icon": "📍"
+        },
+        {
+            "id": "people",
+            "name": "أشخاص",
+            "name_en": "People",
+            "icon": "👥"
+        }
+    ]
+}

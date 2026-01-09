@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini 3 Sign Language Assistant | مترجم لغة الإشارة</title>
+    <meta name="description"
+        content="AI-powered Egyptian Sign Language translator built with Gemini 3 API for the Gemini 3 Hackathon 2026">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4285f4;
+            --primary-dark: #3367d6;
+            --primary-light: #669df6;
+            --secondary: #1e293b;
+            --accent: #fbbc04;
+            --green: #34a853;
+            --red: #ea4335;
+            --bg-light: #f0f4ff;
+            --bg-dark: #0f172a;
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.95);
+            --shadow: 0 20px 60px rgba(66, 133, 244, 0.15);
+            --radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4285f4 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.4);
+        }
+
+        .logo-text h1 {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 900;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+            font-size: 0.8rem;
+            display: block;
+        }
+
+        .gemini-badge {
+            background: linear-gradient(135deg, var(--accent) 0%, #ff6f00 100%);
+            color: #1e293b;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(251, 188, 4, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(251, 188, 4, 0);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(66, 133, 244, 0.4);
+        }
+
+        .nav-btn.danger {
+            background: var(--red);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--glass);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        /* Translator Section */
+        .translator-input {
+            width: 100%;
+            min-height: 140px;
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            resize: vertical;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        .translator-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(66, 133, 244, 0.15);
+            background: white;
+        }
+
+        .translate-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(66, 133, 244, 0.4);
+        }
+
+        .translate-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Output Section */
+        .output-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+            border-radius: 14px;
+            border: 2px solid var(--primary-light);
+            min-height: 180px;
+        }
+
+        .output-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .output-content {
+            line-height: 1.9;
+            white-space: pre-wrap;
+        }
+
+        /* Chat Sidebar */
+        .chat-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .chat-card {
+            display: flex;
+            flex-direction: column;
+            height: 550px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: linear-gradient(180deg, #f8fafc 0%, #f0f4ff 100%);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 1rem 1.2rem;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            color: white;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .chat-send {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-send:hover {
+            transform: scale(1.05);
+        }
+
+        /* Dictionary Section */
+        .dictionary-card {
+            margin-top: 2rem;
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-tab {
+            padding: 0.6rem 1.2rem;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .category-tab:hover,
+        .category-tab.active {
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .words-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .word-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 14px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .word-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(66, 133, 244, 0.15);
+        }
+
+        .word-ar {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .word-en {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .word-desc {
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+            line-height: 1.4;
+        }
+
+        /* Emergency Banner */
+        .emergency-banner {
+            background: linear-gradient(135deg, var(--red) 0%, #ff6b6b 100%);
+            padding: 1.2rem 2rem;
+            border-radius: var(--radius);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(234, 67, 53, 0.3);
+        }
+
+        .emergency-text {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .emergency-text i {
+            font-size: 2rem;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(-5deg);
+            }
+
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .emergency-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            color: var(--red);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .emergency-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .emergency-btn.green {
+            background: var(--green);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(30, 41, 59, 0.98);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+
+        .hackathon-info {
+            background: linear-gradient(135deg, var(--primary) 0%, #764ba2 100%);
+            padding: 1.5rem;
+            border-radius: 14px;
+            margin-top: 1.5rem;
+            display: inline-block;
+        }
+
+        .hackathon-info img {
+            height: 40px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--red);
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-sidebar {
+                position: static;
+            }
+
+            .emergency-banner {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">🤟</div>
+                <div class="logo-text">
+                    <h1>Sign Language AI</h1>
+                    <span>مترجم لغة الإشارة الذكي</span>
+                </div>
+                <div class="gemini-badge">
+                    <i class="fas fa-bolt"></i> Powered by Gemini 3
+                </div>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn danger" onclick="showEmergencyModal()">
+                    <i class="fas fa-phone-alt"></i> طوارئ
+                </button>
+                <button class="nav-btn primary" onclick="scrollToSection('dictionary')">
+                    <i class="fas fa-book"></i> القاموس
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="main-content">
+                <!-- Emergency Banner -->
+                <div class="emergency-banner">
+                    <div class="emergency-text">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <strong>خط طوارئ الصم</strong>
+                            <p style="font-size: 0.9rem; opacity: 0.9;">للمساعدة الفورية في حالات الطوارئ</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="emergency-btn green" onclick="shareLocation()">
+                            <i class="fas fa-map-marker-alt"></i> شارك موقعك
+                        </button>
+                        <button class="emergency-btn" onclick="showEmergencyModal()">
+                            <i class="fas fa-hands"></i> عبارات الطوارئ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Translator Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-language"></i></div>
+                        <h2 class="card-title">مترجم لغة الإشارة <span
+                                style="color: var(--primary); font-size: 0.8rem;">Gemini 3</span></h2>
+                    </div>
+
+                    <textarea class="translator-input" id="inputText"
+                        placeholder="اكتب النص هنا وسأترجمه لوصف حركات لغة الإشارة باستخدام الذكاء الاصطناعي..."></textarea>
+
+                    <button class="translate-btn" onclick="translateText()" id="translateBtn">
+                        <i class="fas fa-sign-language"></i>
+                        ترجم إلى لغة الإشارة
+                    </button>
+
+                    <div class="output-section" id="outputSection" style="display: none;">
+                        <div class="output-title">
+                            <i class="fas fa-hands"></i>
+                            <span>ترجمة لغة الإشارة (Gemini 3):</span>
+                        </div>
+                        <div class="output-content" id="outputContent"></div>
+                    </div>
+                </div>
+
+                <!-- Dictionary Card -->
+                <div class="card dictionary-card" id="dictionary">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-book-open"></i></div>
+                        <h2 class="card-title">قاموس لغة الإشارة المصرية</h2>
+                    </div>
+
+                    <div class="category-tabs" id="categoryTabs">
+                        <button class="category-tab active" data-category="all">الكل</button>
+                    </div>
+
+                    <div class="words-grid" id="wordsGrid">
+                        <!-- Words loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Sidebar -->
+            <div class="chat-sidebar">
+                <div class="card chat-card">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-robot"></i></div>
+                        <h2 class="card-title">المساعد الذكي</h2>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot">
+                            مرحباً! 👋 أنا مساعدك الذكي المدعوم بـ Gemini 3. كيف يمكنني مساعدتك اليوم؟
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="اكتب رسالتك..."
+                            onkeypress="if(event.key==='Enter') sendChat()">
+                        <button class="chat-send" onclick="sendChat()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Emergency Modal -->
+    <div class="modal" id="emergencyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle" style="color: var(--red);"></i> عبارات الطوارئ</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="emergencyPhrases">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Word Details Modal -->
+    <div class="modal" id="wordModal" onclick="if(event.target===this)closeWordModal()">
+        <div class="modal-content" id="wordModalContent" style="max-width:500px;">
+            <!-- Content loaded dynamically -->
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">🤟 Sign Language <span>AI</span></div>
+            <p class="footer-text">
+                تطبيق ذكي لترجمة لغة الإشارة المصرية - مدعوم بـ Gemini 3 API
+                <br>Built for the Gemini 3 Hackathon 2026
+            </p>
+            <div class="hackathon-info">
+                <strong>🏆 Gemini 3 Hackathon</strong>
+                <br>
+                <small>Built with ❤️ using Google DeepMind Gemini 3</small>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let dictionary = { words: [], categories: [] };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadDictionary();
+        });
+
+        // Load Dictionary
+        async function loadDictionary() {
+            try {
+                const res = await fetch('/api/dictionary');
+                dictionary = await res.json();
+                renderCategories();
+                renderWords('all');
+            } catch (e) {
+                console.error('Failed to load dictionary:', e);
+            }
+        }
+
+        // Render category tabs
+        function renderCategories() {
+            const tabs = document.getElementById('categoryTabs');
+            tabs.innerHTML = '<button class="category-tab active" data-category="all" onclick="filterCategory(\'all\')">الكل</button>';
+
+            dictionary.categories?.forEach(cat => {
+                tabs.innerHTML += `
+                    <button class="category-tab" data-category="${cat.id}" onclick="filterCategory('${cat.id}')">
+                        ${cat.icon} ${cat.name}
+                    </button>
+                `;
+            });
+        }
+
+        // Render words
+        function renderWords(category) {
+            const grid = document.getElementById('wordsGrid');
+            const words = category === 'all'
+                ? dictionary.words
+                : dictionary.words?.filter(w => w.category === category);
+
+            grid.innerHTML = words?.map(w => `
+                <div class="word-card" onclick="showWordDetails('${w.word}')">
+                    <div class="word-ar">${w.word}</div>
+                    <div class="word-en">${w.word_en}</div>
+                    <div class="word-desc">${w.sign_description?.substring(0, 40)}...</div>
+                </div>
+            `).join('') || '<p>لا توجد كلمات</p>';
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+            renderWords(category);
+        }
+
+        // Show word details
+        function showWordDetails(word) {
+            const w = dictionary.words?.find(x => x.word === word);
+            if (!w) return;
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h3>🤟 ${w.word} <span style="color:#64748b; font-weight:400;">(${w.word_en})</span></h3>
+                    <button class="modal-close" onclick="closeWordModal()">&times;</button>
+                </div>
+                <div style="background:linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%); padding:1.5rem; border-radius:14px; margin-bottom:1rem;">
+                    <h4 style="color:var(--primary-dark); margin-bottom:0.5rem;">📍 وصف الإشارة:</h4>
+                    <p>${w.sign_description}</p>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                    <div style="background:#f1f5f9; padding:1rem; border-radius:10px;">
+                        <strong>😊 تعبير الوجه:</strong><br>${w.facial_expression}
+                    </div>
+                    <div style="background:#f1f5f9; padding:1rem; border-radius:10px;">
+                        <strong>✋ شكل اليد:</strong><br>${w.hand_shape}
+                    </div>
+                </div>
+                <div style="background:#f1f5f9; padding:1rem; border-radius:10px; margin-top:1rem;">
+                    <strong>↔️ الحركة:</strong> ${w.movement}
+                </div>
+            `;
+
+            document.getElementById('wordModalContent').innerHTML = modalContent;
+            document.getElementById('wordModal').style.display = 'flex';
+        }
+
+        function closeWordModal() {
+            document.getElementById('wordModal').style.display = 'none';
+        }
+
+        // Translate text with Gemini 3
+        async function translateText() {
+            const text = document.getElementById('inputText').value.trim();
+            if (!text) return;
+
+            const btn = document.getElementById('translateBtn');
+            const output = document.getElementById('outputSection');
+            const content = document.getElementById('outputContent');
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span> جاري الترجمة بـ Gemini 3...';
+
+            try {
+                const res = await fetch('/api/translate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    content.textContent = data.translation;
+                    output.style.display = 'block';
+                } else {
+                    content.textContent = 'حدث خطأ: ' + (data.error || 'غير معروف');
+                    output.style.display = 'block';
+                }
+            } catch (e) {
+                content.textContent = 'فشل الاتصال بالخادم';
+                output.style.display = 'block';
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-language"></i> ترجم إلى لغة الإشارة';
+        }
+
+        // Chat with Gemini 3
+        async function sendChat() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            const text = input.value.trim();
+            if (!text) return;
+
+            messages.innerHTML += `<div class="message user">${text}</div>`;
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+
+            messages.innerHTML += '<div class="message bot" id="loadingMsg"><i class="fas fa-spinner fa-spin"></i> يفكر...</div>';
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await res.json();
+
+                document.getElementById('loadingMsg')?.remove();
+                messages.innerHTML += `<div class="message bot">${data.response || data.error}</div>`;
+            } catch (e) {
+                document.getElementById('loadingMsg')?.remove();
+                messages.innerHTML += '<div class="message bot">عذراً، حدث خطأ في الاتصال</div>';
+            }
+
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Emergency modal
+        async function showEmergencyModal() {
+            const modal = document.getElementById('emergencyModal');
+            const phrases = document.getElementById('emergencyPhrases');
+
+            try {
+                const res = await fetch('/api/emergency');
+                const data = await res.json();
+
+                phrases.innerHTML = data.phrases?.map(p => `
+                    <div style="padding: 1rem; margin-bottom: 1rem; background: #fef2f2; border-radius: 14px; border-right: 4px solid var(--red);">
+                        <strong style="color: var(--red); font-size: 1.2rem;">${p.word}</strong>
+                        <span style="color: #666;">(${p.word_en})</span>
+                        <p style="margin-top: 0.5rem;">${p.sign_description}</p>
+                        <small style="color: #888;">😊 ${p.facial_expression}</small>
+                    </div>
+                `).join('') || '<p>لا توجد بيانات</p>';
+            } catch (e) {
+                phrases.innerHTML = '<p>فشل تحميل البيانات</p>';
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('emergencyModal').style.display = 'none';
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Share Location
+        async function shareLocation() {
+            if (!navigator.geolocation) {
+                alert('❌ المتصفح لا يدعم تحديد الموقع');
+                return;
+            }
+
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحديد...';
+            btn.disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = Math.round(position.coords.accuracy);
+
+                    const googleMapsUrl = `https://maps.google.com/maps?q=${lat},${lng}`;
+                    const message = `🆘 طوارئ - أحتاج مساعدة!\n📍 موقعي:\n${googleMapsUrl}\n⚡ الدقة: ${accuracy} متر`;
+
+                    const modalHTML = `
+                        <div class="modal-header">
+                            <h3>📍 موقعك الحالي</h3>
+                            <button class="modal-close" onclick="this.closest('.modal').style.display='none'">&times;</button>
+                        </div>
+                        <div style="background:linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%); padding:1.5rem; border-radius:14px; margin-bottom:1rem; text-align:center;">
+                            <p style="font-size:1.2rem; margin-bottom:1rem;">
+                                <strong>خط العرض:</strong> ${lat.toFixed(6)}<br>
+                                <strong>خط الطول:</strong> ${lng.toFixed(6)}<br>
+                                <strong>الدقة:</strong> ${accuracy} متر
+                            </p>
+                            <a href="${googleMapsUrl}" target="_blank" style="color:var(--primary); font-weight:bold;">
+                                <i class="fas fa-external-link-alt"></i> فتح في خرائط Google
+                            </a>
+                        </div>
+                        <div style="display:grid; gap:0.5rem;">
+                            <button onclick="shareViaWhatsApp('${encodeURIComponent(message)}')" 
+                                style="padding:1rem; background:#25d366; color:white; border:none; border-radius:12px; cursor:pointer; font-size:1rem; font-family:inherit;">
+                                <i class="fab fa-whatsapp"></i> مشاركة عبر واتساب
+                            </button>
+                            <button onclick="copyLocation('${message.replace(/\n/g, '\\n')}')" 
+                                style="padding:1rem; background:var(--primary); color:white; border:none; border-radius:12px; cursor:pointer; font-size:1rem; font-family:inherit;">
+                                <i class="fas fa-copy"></i> نسخ الرسالة
+                            </button>
+                        </div>
+                    `;
+
+                    document.getElementById('wordModalContent').innerHTML = modalHTML;
+                    document.getElementById('wordModal').style.display = 'flex';
+
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                },
+                (error) => {
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    let errorMsg = '❌ فشل تحديد الموقع';
+                    if (error.code === 1) errorMsg = '❌ تم رفض صلاحية الموقع';
+                    alert(errorMsg);
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+
+        function shareViaWhatsApp(message) {
+            window.open(`https://wa.me/?text=${message}`, '_blank');
+        }
+
+        function copyLocation(text) {
+            navigator.clipboard.writeText(text.replace(/\\n/g, '\n')).then(() => {
+                alert('✅ تم نسخ الموقع!');
+            }).catch(() => {
+                alert('❌ فشل النسخ');
+            });
+        }
+    </script>
+</body>
+
+</html>
