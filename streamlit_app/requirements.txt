@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-multipart
+opencv-python-headless
+mediapipe
+numpy
+scikit-learn
+av
+gTTS
+speechrecognition
+PyAudio
+pydantic
+python-dotenv
+jinja2
+aiofiles

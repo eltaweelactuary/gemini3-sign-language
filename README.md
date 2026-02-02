@@ -17,8 +17,9 @@ This application bridges the communication gap for the deaf and hard-of-hearing 
 
 - 🔄 **AI Translation** - Convert Arabic text to detailed sign language gesture descriptions
 - 🎨 **Imagen Integration** - AI-generated visual sign language illustrations for better learning
-- 💬 **Smart Assistant** - AI chatbot specialized for the deaf community
-- 📚 **Sign Dictionary** - 30+ Egyptian sign language words with detailed visual and text guides
+- 💬 **Smart Assistant** - AI chatbot specialized for the deaf community.
+- 🤖 **3D Digital Human (Preview)** - High-fidelity 3D avatar synthesis from text.
+- 📚 **Sign Dictionary** - 30+ Egyptian sign language words with detailed visual and text guides.
 - 🚨 **Emergency Features** - Quick access to emergency phrases and location sharing
 - 🌐 **Bilingual** - Arabic/English support
 
@@ -43,10 +44,20 @@ pip install -r requirements.txt
 # Place your service-account-key.json in the project root
 
 # 4. Run the application
+### 🚀 Running the Apps
+
+#### 1. Main Web Interface (Flask)
+```bash
 python app.py
 ```
+Open: **http://localhost:5000**
 
-Then open: **http://localhost:5000**
+#### 2. Advanced Digital Human Interface (Streamlit)
+```bash
+cd streamlit_app
+streamlit run app.py
+```
+Open: **http://localhost:8501** (Requires `streamlit` and `mediapipe`)
 
 ---
 
